@@ -10,15 +10,13 @@ class ChatRequest(BaseModel):
 
 @router.post("/")
 async def chat(request: ChatRequest):
-    # Context prompt for the portfolio bot
-    system_prompt = """You are an AI Assistant for Safir's Portfolio. 
+    system_prompt = """You are an AI Assistant for Safir's Portfolio.
     Safir is an AI Automation Engineer and Computer Vision Developer.
     He is skilled in Python, YOLO, FastAPI, and LLMs.
     Answer questions about his skills and projects professionally.
-    Keep answers concise and relevant to his portfolio.
-    
-    User Question: """
-    
-    full_prompt = system_prompt + request.message
-    
-    return StreamingResponse(generate_streaming_response(full_prompt, model="llama3-8b-8192"), media_type="text/plain")
+    Keep answers concise and relevant to his portfolio."""
+
+    return StreamingResponse(
+        generate_streaming_response(system_prompt, request.message, model="llama3-8b-8192"),
+        media_type="text/plain"
+    )
