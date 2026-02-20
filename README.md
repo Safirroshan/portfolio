@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Safir's AI Portfolio
 
-## Getting Started
+A modern, high-performance portfolio website showcasing AI engineering skills, featuring real-time object detection, local LLM integration, and interactive 3D elements.
 
-First, run the development server:
+## 🚀 Features
 
+*   **AI Chatbot**: Powered by local LLMs (Ollama + Mistral/Llama 3).
+*   **Live YOLO Detection**: Real-time object detection via webcam using Ultralytics YOLOv8.
+*   **AI Vision Explainer**: Upload images for instant analysis using multimodal LLMs (LLaVA).
+*   **Immersive UI**: Glassmorphism, neon aesthetics, and smooth animations (Framer Motion, GSAP, Three.js).
+*   **Tech Stack**: Next.js 14, TypeScript, Tailwind CSS, FastAPI, Python.
+
+## 🛠️ Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+1.  **Node.js** (v18+)
+2.  **Python** (v3.10+)
+3.  **Ollama** (for local AI models) -> [Download Ollama](https://ollama.com/)
+
+### Pull Required AI Models
+Open your terminal and run:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+ollama pull mistral  # For Chatbot
+ollama pull llava    # For Vision Explainer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Frontend Setup
+Navigate to the project root:
+```bash
+cd portfolio
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Backend Setup
+Navigate to the backend directory:
+```bash
+cd backend
+# Optional: Create a virtual environment
+# python -m venv venv
+# .\venv\Scripts\activate
 
-## Learn More
+pip install -r requirements.txt
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🏃‍♂️ Running the Application
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+You need to run both the **Frontend** and **Backend** servers simultaneously in separate terminals.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Terminal 1: Backend (FastAPI)
+```bash
+cd portfolio/backend
+uvicorn app.main:app --reload
+```
+*The backend runs on `http://localhost:8000`*
 
-## Deploy on Vercel
+### Terminal 2: Frontend (Next.js)
+```bash
+cd portfolio
+npm run dev
+```
+*The frontend runs on `http://localhost:3000`*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🌟 Usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  Open `http://localhost:3000` in your browser.
+2.  **Chatbot**: Click the chat icon in the bottom right to talk to the AI assistant.
+3.  **AI Lab**: Scroll to the AI Lab section to try the **Vision Explainer** and **YOLO Demo**.
+    *   **YOLO**: Grant camera permissions to see real-time object detection.
+    *   **Vision**: Upload an image to get a description.
+
+## 🤝 Contributing
+
+Feel free to fork this repository and submit pull requests.
+
+## 📄 License
+
+MIT License
