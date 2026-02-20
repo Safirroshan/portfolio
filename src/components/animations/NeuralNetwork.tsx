@@ -15,7 +15,7 @@ export default function NeuralNetwork() {
 }
 
 function Particles(props: any) {
-    const ref = useRef<any>();
+    const ref = useRef<any>(null);
 
     // Generate random points in a sphere
     const sphere = useMemo(() => {
