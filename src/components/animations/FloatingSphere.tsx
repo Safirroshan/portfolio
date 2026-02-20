@@ -26,7 +26,7 @@ function Sphere() {
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.random() * Math.PI;
         const radius = 2 + Math.random() * 0.5;
-        
+
         positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
         positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
         positions[i * 3 + 2] = radius * Math.cos(phi);
@@ -49,9 +49,7 @@ function Sphere() {
                 <bufferGeometry>
                     <bufferAttribute
                         attach="attributes-position"
-                        count={particleCount}
-                        array={positions}
-                        itemSize={3}
+                        args={[positions, 3]}
                     />
                 </bufferGeometry>
                 <pointsMaterial size={0.05} color="#00f0ff" transparent opacity={0.6} />
