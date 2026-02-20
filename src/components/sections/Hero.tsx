@@ -48,13 +48,13 @@ export default function Hero() {
                     className="relative mb-4"
                 >
                     <motion.div
-                        animate={{ 
+                        animate={{
                             y: [0, -10, 0],
                         }}
-                        transition={{ 
-                            duration: 3, 
-                            repeat: Infinity, 
-                            ease: "easeInOut" 
+                        transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut"
                         }}
                         className="relative"
                     >
@@ -70,7 +70,7 @@ export default function Hero() {
                             }}
                             transition={{ duration: 3, repeat: Infinity }}
                         />
-                        
+
                         {/* Profile Image */}
                         <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-neon-blue shadow-[0_0_40px_rgba(0,240,255,0.6)]">
                             <Image
@@ -165,10 +165,10 @@ export default function Hero() {
                     transition={{ delay: 0.8, duration: 0.8 }}
                     className="flex flex-col md:flex-row gap-6 mt-4"
                 >
-                    <MagneticButton variant="primary">
+                    <MagneticButton variant="primary" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
                         View Projects
                     </MagneticButton>
-                    <MagneticButton variant="secondary">
+                    <MagneticButton variant="secondary" onClick={() => document.getElementById('ai-lab')?.scrollIntoView({ behavior: 'smooth' })}>
                         Explore AI Lab
                     </MagneticButton>
                 </motion.div>
