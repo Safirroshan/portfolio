@@ -28,10 +28,11 @@ allowed_origins = [
 
 # Add your Vercel domain after deployment
 # Get from environment variable for security
-vercel_url = os.getenv("VERCEL_URL")
+vercel_url = os.getenv("VERCEL_URL", "")
 if vercel_url:
-    allowed_origins.append(f"https://{vercel_url}")
-    allowed_origins.append(f"https://*.vercel.app")  # For preview deployments
+    # Strip https:// prefix if already included, then add it once
+    clean_url = vercel_url.replace("https://", "").replace("http://", "").rstrip("/")
+    allowed_origins.append(f"https://{clean_url}")
 
 app.add_middleware(
     CORSMiddleware,
