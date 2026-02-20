@@ -21,4 +21,4 @@ async def chat(request: ChatRequest):
     
     full_prompt = system_prompt + request.message
     
-    return StreamingResponse(generate_streaming_response(full_prompt, model="mistral"), media_type="text/plain")
+    return StreamingResponse(generate_streaming_response(full_prompt, model="llama3-8b-8192"), media_type="text/plain")
