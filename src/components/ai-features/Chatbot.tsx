@@ -155,10 +155,9 @@ export default function Chatbot() {
                 {messages.map((msg, idx) => (
                     <motion.div
                         key={idx}
-                        // Only animate initial entry, NOT updates
-                        initial={msg.content === "" ? { opacity: 0, y: 10 } : false}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25, delay: idx === messages.length - 1 ? 0.05 : 0 }}
                         className={cn(
                             "flex gap-3 max-w-[90%]",
                             msg.role === "user" ? "ml-auto flex-row-reverse" : "mr-auto"
@@ -189,14 +188,23 @@ export default function Chatbot() {
                     </motion.div>
                 ))}
                 {isLoading && messages[messages.length - 1].role === 'user' && (
-                    // Show 'thinking' only if the last message is from user (waiting for AI first chunk)
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3 ml-0">
-                        <div className="w-8 h-8 rounded-full bg-neon-blue/20 text-neon-blue flex items-center justify-center shrink-0">
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        className="flex gap-3 ml-0"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-neon-blue/20 text-neon-blue flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
                             <Bot className="w-4 h-4" />
                         </div>
-                        <div className="bg-gray-800/50 border border-gray-700 p-3 rounded-lg flex items-center gap-2">
-                            <Loader2 className="w-4 h-4 animate-spin text-neon-blue" />
-                            <span className="text-xs text-gray-400">Thinking...</span>
+                        <div className="bg-gray-800/50 border border-gray-700 p-3 rounded-lg flex items-center gap-2 max-w-[85%]">
+                            {/* Animated typing dots */}
+                            <div className="flex space-x-1.5 h-4 items-center px-1">
+                                <motion.div className="w-1.5 h-1.5 bg-neon-blue rounded-full" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
+                                <motion.div className="w-1.5 h-1.5 bg-neon-purple rounded-full" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} />
+                                <motion.div className="w-1.5 h-1.5 bg-neon-blue rounded-full" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} />
+                            </div>
+                            <span className="text-xs text-gray-400 font-medium ml-1">Typing...</span>
                         </div>
                     </motion.div>
                 )}

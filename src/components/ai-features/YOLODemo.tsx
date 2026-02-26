@@ -130,13 +130,13 @@ export default function YOLODemo() {
                 )}
             </div>
 
-            <div className="flex-1 bg-black/50 rounded-xl overflow-hidden relative border border-gray-800 group">
+            <div className="flex-1 bg-white/[0.02] rounded-xl overflow-hidden relative border border-white/[0.06] group">
                 {error ? (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-900/90 text-center p-6">
-                        <div className="z-10 bg-black/80 p-6 rounded-xl border border-red-500/30 backdrop-blur-md">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/[0.02] text-center p-6">
+                        <div className="z-10 bg-[#12121a] p-6 rounded-xl border border-red-500/20 shadow-md">
                             <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-                            <p className="text-red-400 font-bold mb-2">Permission Denied</p>
-                            <p className="text-gray-400 text-sm">{error}</p>
+                            <p className="text-red-500 font-bold mb-2">Permission Denied</p>
+                            <p className="text-gray-500 text-sm">{error}</p>
                         </div>
                     </div>
                 ) : (
@@ -161,7 +161,7 @@ export default function YOLODemo() {
                         />
 
                         {!isStreaming && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gray-900/80 z-10 backdrop-blur-sm">
+                            <div className="absolute inset-0 flex items-center justify-center bg-white/[0.02] z-10">
                                 <p className="text-gray-400">Click Start to enable camera</p>
                             </div>
                         )}
@@ -170,8 +170,8 @@ export default function YOLODemo() {
             </div>
 
             {/* Detected Objects List */}
-            <div className="mt-4 h-24 overflow-y-auto custom-scrollbar bg-black/20 rounded-lg p-3 border border-gray-800">
-                <h3 className="text-xs font-bold text-gray-400 mb-2 uppercase tracking-wider">Detected Objects</h3>
+            <div className="mt-4 h-24 overflow-y-auto custom-scrollbar bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
+                <h3 className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Detected Objects</h3>
                 <div className="flex flex-wrap gap-2">
                     {detectedObjects.length > 0 ? (
                         detectedObjects.map((obj, i) => (
@@ -180,7 +180,7 @@ export default function YOLODemo() {
                             </span>
                         ))
                     ) : (
-                        <span className="text-gray-600 text-xs italic">No objects detected...</span>
+                        <span className="text-gray-500 text-xs italic">No objects detected...</span>
                     )}
                 </div>
             </div>
@@ -189,7 +189,7 @@ export default function YOLODemo() {
                 {!isStreaming ? (
                     <button
                         onClick={startCamera}
-                        className="px-6 py-2 rounded-lg bg-neon-blue text-black font-bold hover:bg-neon-blue/80 transition-colors flex items-center gap-2"
+                        className="px-6 py-2 rounded-lg bg-[var(--neon-blue)] text-white font-bold hover:bg-[var(--neon-blue)]/80 transition-colors flex items-center gap-2 shadow-md"
                     >
                         <Play className="w-4 h-4" /> Start Detection
                     </button>

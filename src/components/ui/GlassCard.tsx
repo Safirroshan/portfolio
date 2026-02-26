@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface GlassCardProps extends HTMLMotionProps<"div"> {
+interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
+    className?: string;
     variant?: "default" | "neon";
 }
 
@@ -15,20 +15,20 @@ export default function GlassCard({
     ...props
 }: GlassCardProps) {
     const variants = {
-        default: "bg-glass-bg border-glass-border hover:border-white/20",
-        neon: "bg-glass-bg border-neon-blue/30 shadow-[0_0_15px_-5px_rgba(0,240,255,0.1)] hover:border-neon-blue/60 hover:shadow-[0_0_20px_-5px_rgba(0,240,255,0.3)]"
+        default: "bg-white/[0.03] border-white/[0.06] shadow-[var(--card-shadow)] hover:shadow-[var(--card-shadow-hover)]",
+        neon: "bg-white/[0.03] border-[var(--neon-blue)]/20 shadow-[0_0_15px_-5px_rgba(59,130,246,0.08)] hover:border-[var(--neon-blue)]/40 hover:shadow-[0_0_20px_-5px_rgba(59,130,246,0.15)]"
     };
 
     return (
-        <motion.div
+        <div
             className={cn(
-                "rounded-2xl border backdrop-blur-md p-6 transition-all duration-300",
+                "border rounded-2xl p-6 transition-all duration-300",
                 variants[variant],
                 className
             )}
             {...props}
         >
             {children}
-        </motion.div>
+        </div>
     );
 }

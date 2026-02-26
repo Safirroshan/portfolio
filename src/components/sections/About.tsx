@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
-import { Calendar, Briefcase, Award, Code, Cpu, Database } from "lucide-react";
-import Image from "next/image";
+import { Code, Cpu, Database, Briefcase } from "lucide-react";
 import FloatingCube from "../animations/FloatingCube";
 import NeuralNetworkNodes from "../animations/NeuralNetworkNodes";
 import Interactive3DModel from "../animations/Interactive3DModel";
@@ -19,185 +18,175 @@ export default function About() {
             role: "Software Engineer",
             period: "Present",
             description: "Leading AI automation and backend development.",
-            icon: <Cpu className="w-5 h-5 text-neon-blue" />
+            icon: <Cpu className="w-4 h-4" />,
+            color: "bg-[var(--neon-blue)]"
         },
         {
             company: "Caze Labs",
             role: "Software Intern",
             period: "Past",
             description: "Contributed to core product features and testing.",
-            icon: <Code className="w-5 h-5 text-neon-purple" />
+            icon: <Code className="w-4 h-4" />,
+            color: "bg-[var(--neon-purple)]"
         },
         {
             company: "TAP Academy",
             role: "Full Stack Intern",
             period: "Past",
             description: "Learned full-stack application development principles.",
-            icon: <Database className="w-5 h-5 text-green-400" />
+            icon: <Database className="w-4 h-4" />,
+            color: "bg-emerald-500"
         }
     ];
 
     const stats = [
-        { label: "AI Projects Built", value: "10+", icon: <Cpu /> },
-        { label: "Automation Systems", value: "5+", icon: <Briefcase /> },
-        { label: "Models Integrated", value: "8+", icon: <Database /> },
-        { label: "APIs Developed", value: "15+", icon: <Code /> }
+        { label: "AI Projects Built", value: "10+", icon: <Cpu className="w-5 h-5" />, color: "text-[var(--neon-blue)]", bg: "bg-blue-500/10" },
+        { label: "Automation Systems", value: "5+", icon: <Briefcase className="w-5 h-5" />, color: "text-[var(--neon-purple)]", bg: "bg-purple-500/10" },
+        { label: "Models Integrated", value: "8+", icon: <Database className="w-5 h-5" />, color: "text-emerald-400", bg: "bg-emerald-500/10" },
+        { label: "APIs Developed", value: "15+", icon: <Code className="w-5 h-5" />, color: "text-orange-400", bg: "bg-orange-500/10" }
     ];
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                duration: 0.6
-            }
-        }
-    };
-
     return (
-        <section id="about" className="py-20 px-4 relative overflow-hidden">
-            {/* Animated Background Elements */}
-            <motion.div
-                animate={{
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 90, 0],
-                    opacity: [0.03, 0.06, 0.03]
-                }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-blue rounded-full blur-3xl"
-            />
-            <motion.div
-                animate={{
-                    scale: [1, 1.3, 1],
-                    rotate: [0, -90, 0],
-                    opacity: [0.03, 0.06, 0.03]
-                }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-purple rounded-full blur-3xl"
-            />
-            
+        <section id="about" className="py-24 px-4 relative overflow-hidden">
+            {/* Subtle gradient background */}
+            <div className="absolute inset-0 gradient-mesh opacity-60" />
+
             {/* 3D Floating Cube */}
-            <div className="absolute top-10 right-10 w-32 h-32 opacity-40 pointer-events-none hidden lg:block">
+            <div className="absolute top-10 right-10 w-32 h-32 opacity-30 pointer-events-none hidden lg:block">
                 <FloatingCube />
             </div>
-            
+
             {/* Large Interactive Neural Network - Bottom Right */}
-            <div className="absolute bottom-10 right-10 w-96 h-96 opacity-80 hidden lg:block">
+            <div className="absolute bottom-10 right-10 w-96 h-96 opacity-40 hidden lg:block">
                 <Interactive3DModel type="network" />
             </div>
-            
+
             <div className="max-w-6xl mx-auto relative z-10">
-                <motion.div
+                <div
                     ref={ref}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                    variants={containerVariants}
-                    className="grid md:grid-cols-2 gap-12 items-center"
+                    className="grid md:grid-cols-2 gap-16 items-start"
                 >
-                    {/* Timeline Column */}
+                    {/* Timeline Column — Floating in from left */}
                     <div className="space-y-8">
-                        <motion.h2 variants={itemVariants} className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
+                        <motion.h2
+                            initial={{ opacity: 0, x: -60 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, ease: "easeOut" as const }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-purple)] gradient-strike"
+                        >
                             Experience
                         </motion.h2>
 
-                        <div className="relative border-l border-gray-800 ml-3 space-y-8">
+                        <div className="relative ml-3 space-y-6">
+                            {/* Vertical Line — Draws in */}
+                            <motion.div
+                                initial={{ scaleY: 0 }}
+                                whileInView={{ scaleY: 1 }}
+                                transition={{ duration: 1.2, ease: "easeOut" as const }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                className="absolute left-[7px] top-2 bottom-2 w-[2px] bg-gradient-to-b from-[var(--neon-blue)]/30 to-transparent origin-top"
+                            />
+
                             {timeline.map((item, index) => (
                                 <motion.div
                                     key={index}
-                                    variants={itemVariants}
-                                    whileHover={{ x: 10, scale: 1.02 }}
-                                    className="relative pl-8 group"
+                                    initial={{ opacity: 0, x: -40, y: 20 }}
+                                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                                    transition={{
+                                        duration: 0.6,
+                                        delay: 0.15 + index * 0.2,
+                                        ease: "easeOut" as const
+                                    }}
+                                    viewport={{ once: true, margin: "-50px" }}
+                                    whileHover={{ x: 6, boxShadow: "var(--card-shadow-hover)" }}
+                                    className="relative pl-10 group"
                                 >
-                                    <motion.div 
-                                        className="absolute -left-[9px] top-1 bg-background p-1 rounded-full border border-gray-700"
-                                        whileHover={{ 
-                                            scale: 1.3, 
-                                            rotate: 360, 
-                                            borderColor: "rgba(0, 240, 255, 0.8)",
-                                            boxShadow: "0 0 20px rgba(0, 240, 255, 0.6)"
-                                        }}
-                                        transition={{ duration: 0.5 }}
-                                    >
-                                        {item.icon}
-                                    </motion.div>
-                                    
-                                    {/* Connecting Line Glow on Hover */}
+                                    {/* Timeline Dot — Appears with pop */}
                                     <motion.div
-                                        className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-neon-blue to-transparent opacity-0 group-hover:opacity-100"
-                                        initial={{ scaleY: 0 }}
-                                        whileHover={{ scaleY: 1 }}
-                                        transition={{ duration: 0.3 }}
-                                    />
-                                    
-                                    <h3 className="text-xl font-bold text-white">{item.role}</h3>
-                                    <p className="text-neon-blue font-mono text-sm mb-1">{item.company} | {item.period}</p>
-                                    <p className="text-gray-400">{item.description}</p>
+                                        initial={{ scale: 0 }}
+                                        whileInView={{ scale: 1 }}
+                                        transition={{ duration: 0.4, delay: 0.3 + index * 0.2, type: "spring", bounce: 0.5 }}
+                                        viewport={{ once: true }}
+                                        className={`absolute left-0 top-1.5 w-4 h-4 rounded-full ${item.color} flex items-center justify-center text-white shadow-md`}
+                                    >
+                                        <div className="w-2 h-2 rounded-full bg-white" />
+                                    </motion.div>
+
+                                    <div className="premium-card p-5">
+                                        <h3 className="text-lg font-bold text-white">{item.role}</h3>
+                                        <p className="text-[var(--neon-blue)] font-mono text-sm mt-0.5">{item.company} · {item.period}</p>
+                                        <p className="text-gray-400 text-sm mt-2 leading-relaxed">{item.description}</p>
+                                    </div>
                                 </motion.div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Bio & Stats Column */}
-                    <div className="space-y-12">
-                        <motion.div variants={itemVariants}>
-                            <h2 className="text-4xl font-bold text-white mb-6">
-                                About <span className="text-neon-purple">Me</span>
+                    {/* Bio & Stats Column — Floating in from right */}
+                    <div className="space-y-10">
+                        <motion.div
+                            initial={{ opacity: 0, x: 60 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, ease: "easeOut" as const }}
+                            viewport={{ once: true, margin: "-50px" }}
+                        >
+                            <h2 className="text-4xl font-bold text-white mb-5">
+                                About <span className="text-[var(--neon-purple)]">Me</span>
                             </h2>
-                            <p className="text-gray-300 leading-relaxed text-lg">
-                                I am a Software Engineer passionate about bridging the gap between <span className="text-neon-blue">AI research</span> and <span className="text-neon-blue">production systems</span>.
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                viewport={{ once: true }}
+                                className="text-gray-300 leading-relaxed text-lg"
+                            >
+                                I am a Software Engineer passionate about bridging the gap between <span className="text-[var(--neon-blue)] font-medium">AI research</span> and <span className="text-[var(--neon-blue)] font-medium">production systems</span>.
                                 My expertise lies in building scalable automation workflows, real-time computer vision systems using YOLO, and integrating Large Language Models locally.
-                            </p>
+                            </motion.p>
                         </motion.div>
 
-                        {/* Stats Grid */}
-                        <motion.div
-                            variants={containerVariants}
-                            className="grid grid-cols-2 gap-6"
-                        >
+                        {/* Stats Grid — Stagger float up */}
+                        <div className="grid grid-cols-2 gap-4">
                             {stats.map((stat, index) => (
                                 <motion.div
                                     key={index}
-                                    variants={itemVariants}
-                                    whileHover={{ 
-                                        scale: 1.05, 
-                                        borderColor: "rgba(0, 240, 255, 0.5)",
-                                        boxShadow: "0 0 30px rgba(0, 240, 255, 0.3)"
+                                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{
+                                        duration: 0.5,
+                                        delay: 0.3 + index * 0.12,
+                                        type: "spring",
+                                        bounce: 0.3
                                     }}
-                                    className="p-6 rounded-xl bg-glass-bg border border-glass-border backdrop-blur-sm shadow-lg flex flex-col items-center justify-center text-center group transition-colors hover:bg-white/5"
+                                    viewport={{ once: true, margin: "-30px" }}
+                                    whileHover={{ y: -6, boxShadow: "var(--card-shadow-hover)" }}
+                                    className="premium-card p-5 flex flex-col items-center justify-center text-center"
                                 >
-                                    <motion.div 
-                                        className="mb-2 p-3 rounded-full bg-neon-blue/10 text-neon-blue group-hover:bg-neon-blue/20 transition-colors"
-                                        whileHover={{ rotate: 360, scale: 1.2 }}
-                                        transition={{ duration: 0.6 }}
+                                    <motion.div
+                                        initial={{ scale: 0, rotate: -30 }}
+                                        whileInView={{ scale: 1, rotate: 0 }}
+                                        transition={{ duration: 0.4, delay: 0.5 + index * 0.12, type: "spring", bounce: 0.4 }}
+                                        viewport={{ once: true }}
+                                        className={`mb-3 p-2.5 rounded-xl ${stat.bg} ${stat.color}`}
                                     >
                                         {stat.icon}
                                     </motion.div>
-                                    <motion.h4 
-                                        className="text-3xl font-bold text-white mb-1"
-                                        initial={{ scale: 1 }}
-                                        whileInView={{ scale: [1, 1.2, 1] }}
-                                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    <motion.h4
+                                        initial={{ opacity: 0 }}
+                                        whileInView={{ opacity: 1 }}
+                                        transition={{ duration: 0.3, delay: 0.6 + index * 0.12 }}
                                         viewport={{ once: true }}
+                                        className="text-3xl font-bold text-white mb-0.5"
                                     >
                                         {stat.value}
                                     </motion.h4>
-                                    <p className="text-gray-400 text-sm">{stat.label}</p>
+                                    <p className="text-gray-400 text-xs font-medium uppercase tracking-wider">{stat.label}</p>
                                 </motion.div>
                             ))}
-                        </motion.div>
+                        </div>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

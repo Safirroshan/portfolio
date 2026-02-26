@@ -17,6 +17,6 @@ async def chat(request: ChatRequest):
     Keep answers concise and relevant to his portfolio."""
 
     return StreamingResponse(
-        generate_streaming_response(system_prompt, request.message, model="llama3-8b-8192"),
+        generate_streaming_response(system_prompt, request.message, model="llama-3.1-8b-instant"),
         media_type="text/plain"
     )

@@ -91,10 +91,10 @@ export default function FloatingChatbot() {
 
         } catch (error) {
             console.log("Backend not available, using simple chatbot");
-            
+
             // Use simple FAQ-based chatbot as fallback
             const simpleResponse = getSimpleResponse(userInput);
-            
+
             setMessages(prev => [...prev, {
                 role: "assistant",
                 content: simpleResponse
@@ -123,7 +123,11 @@ export default function FloatingChatbot() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                     >
-                        <div className="relative">
+                        <motion.div
+                            className="relative"
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        >
                             {/* Main Button */}
                             <div className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-gradient-to-r from-gray-900 to-black border border-neon-blue/40 shadow-[0_0_40px_rgba(0,240,255,0.3)] hover:shadow-[0_0_60px_rgba(0,240,255,0.5)] transition-all backdrop-blur-sm">
                                 {/* Avatar */}
@@ -140,7 +144,7 @@ export default function FloatingChatbot() {
                                         transition={{ duration: 2, repeat: Infinity }}
                                     />
                                 </div>
-                                
+
                                 {/* Text */}
                                 <div className="text-left">
                                     <div className="flex items-center gap-2">
@@ -153,7 +157,7 @@ export default function FloatingChatbot() {
                                     </div>
                                     <p className="text-xs text-gray-400">Ask me anything about Safir</p>
                                 </div>
-                                
+
                                 {/* Arrow indicator */}
                                 <motion.div
                                     animate={{ x: [0, 4, 0] }}
@@ -161,11 +165,11 @@ export default function FloatingChatbot() {
                                     className="text-neon-blue"
                                 >
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                        <path d="M7 4L13 10L7 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <path d="M7 4L13 10L7 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </motion.div>
                             </div>
-                            
+
                             {/* Glow effect */}
                             <motion.div
                                 className="absolute inset-0 rounded-2xl bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 blur-xl -z-10"
@@ -175,7 +179,7 @@ export default function FloatingChatbot() {
                                 }}
                                 transition={{ duration: 3, repeat: Infinity }}
                             />
-                        </div>
+                        </motion.div>
                     </motion.button>
                 )}
             </AnimatePresence>
@@ -183,10 +187,10 @@ export default function FloatingChatbot() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
+                        initial={{ opacity: 0, y: 30, scale: 0.9, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
+                        transition={{ type: "spring", stiffness: 350, damping: 25 }}
                         className={cn(
                             "fixed bottom-8 right-8 z-50 bg-gradient-to-b from-gray-900 to-black backdrop-blur-xl border border-neon-blue/40 rounded-2xl shadow-[0_0_60px_rgba(0,240,255,0.4)] overflow-hidden flex flex-col",
                             isMinimized ? "w-96 h-auto" : "w-[420px] h-[650px]"
@@ -243,9 +247,9 @@ export default function FloatingChatbot() {
                                     {messages.map((msg, idx) => (
                                         <motion.div
                                             key={idx}
-                                            initial={msg.content === "" ? { opacity: 0, y: 10 } : false}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ duration: 0.3 }}
+                                            initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            transition={{ type: "spring", stiffness: 400, damping: 25, delay: idx === messages.length - 1 ? 0.05 : 0 }}
                                             className={cn(
                                                 "flex gap-3 max-w-[85%]",
                                                 msg.role === "user" ? "ml-auto flex-row-reverse" : "mr-auto"
@@ -253,8 +257,8 @@ export default function FloatingChatbot() {
                                         >
                                             <div className={cn(
                                                 "w-8 h-8 rounded-full flex items-center justify-center shrink-0",
-                                                msg.role === "user" 
-                                                    ? "bg-gradient-to-br from-neon-purple to-purple-600" 
+                                                msg.role === "user"
+                                                    ? "bg-gradient-to-br from-neon-purple to-purple-600"
                                                     : "bg-gradient-to-br from-neon-blue to-blue-600"
                                             )}>
                                                 {msg.role === "user" ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white" />}
@@ -278,13 +282,23 @@ export default function FloatingChatbot() {
                                         </motion.div>
                                     ))}
                                     {isLoading && messages[messages.length - 1].role === 'user' && (
-                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3 ml-0">
-                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neon-blue to-blue-600 flex items-center justify-center shrink-0">
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.9 }}
+                                            className="flex gap-3 ml-0"
+                                        >
+                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neon-blue to-blue-600 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
                                                 <Bot className="w-4 h-4 text-white" />
                                             </div>
-                                            <div className="bg-gray-800/60 border border-gray-700/50 p-4 rounded-2xl flex items-center gap-2">
-                                                <Loader2 className="w-4 h-4 animate-spin text-neon-blue" />
-                                                <span className="text-sm text-gray-300">Thinking...</span>
+                                            <div className="bg-gray-800/60 border border-gray-700/50 p-4 rounded-2xl flex items-center gap-2 max-w-[85%]">
+                                                {/* Animated typing dots */}
+                                                <div className="flex space-x-1.5 h-5 items-center px-1">
+                                                    <motion.div className="w-1.5 h-1.5 bg-neon-blue rounded-full" animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
+                                                    <motion.div className="w-1.5 h-1.5 bg-neon-purple rounded-full" animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} />
+                                                    <motion.div className="w-1.5 h-1.5 bg-neon-blue rounded-full" animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} />
+                                                </div>
+                                                <span className="text-xs text-gray-400 font-medium ml-1">Safir AI is typing...</span>
                                             </div>
                                         </motion.div>
                                     )}

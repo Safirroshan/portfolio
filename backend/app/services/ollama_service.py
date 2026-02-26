@@ -6,7 +6,7 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 
-async def generate_response(system_prompt: str, user_message: str, model: str = "llama3-8b-8192"):
+async def generate_response(system_prompt: str, user_message: str, model: str = "llama-3.1-8b-instant"):
     if not GROQ_API_KEY:
         return "Chatbot is not configured. Please set GROQ_API_KEY environment variable."
     headers = {
@@ -33,7 +33,7 @@ async def generate_response(system_prompt: str, user_message: str, model: str = 
         return f"Error: {type(e).__name__}: {e}"
 
 
-async def generate_streaming_response(system_prompt: str, user_message: str, model: str = "llama3-8b-8192"):
+async def generate_streaming_response(system_prompt: str, user_message: str, model: str = "llama-3.1-8b-instant"):
     """Yields the full Groq response as a single chunk."""
     response = await generate_response(system_prompt, user_message, model)
     yield response

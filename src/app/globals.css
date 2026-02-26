@@ -2,11 +2,14 @@
 
 :root {
   --background: #0a0a0f;
-  --foreground: #ededed;
-  --neon-blue: #00f0ff;
-  --neon-purple: #b000ff;
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(255, 255, 255, 0.05);
+  --foreground: #e4e4e7;
+  --neon-blue: #3b82f6;
+  --neon-purple: #8b5cf6;
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 6px 16px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 4px 12px rgba(59, 130, 246, 0.15), 0 16px 40px rgba(0, 0, 0, 0.3);
+  --section-alt: #0e0e15;
 }
 
 @theme inline {
@@ -16,36 +19,126 @@
   --color-neon-purple: var(--neon-purple);
   --color-glass-border: var(--glass-border);
   --color-glass-bg: var(--glass-bg);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Inter', var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: 'Inter', var(--font-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
   background: var(--neon-blue);
-  color: #000;
+  color: #fff;
 }
 
-/* Scrollbar */
+/* Premium Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--neon-purple);
+  background: var(--neon-blue);
+}
+
+/* Section Alternate Background */
+.section-alt {
+  background-color: var(--section-alt);
+}
+
+/* Premium Gradient Mesh — Dark */
+.gradient-mesh {
+  background-image:
+    radial-gradient(at 20% 30%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 20%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+}
+
+/* Smooth scroll & GPU acceleration */
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100vh;
+}
+
+/* Premium Card — Dark GPU-accelerated */
+.premium-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.premium-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  border-color: rgba(59, 130, 246, 0.15);
+}
+
+/* Gradient Strike / Underline for Headings */
+.gradient-strike {
+  position: relative;
+  display: inline-block;
+}
+
+.gradient-strike::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4), 0 0 24px rgba(139, 92, 246, 0.2);
+}
+
+/* Animated glow grid — subtle background effect */
+.glow-grid {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Katana Slash Animation on Profile Photo */
+.slash-sweep {
+  animation: slashSweep 0.8s ease-out forwards;
+}
+
+.slash-glow {
+  animation: slashSweep 0.8s ease-out forwards;
+}
+
+@keyframes slashSweep {
+  0% {
+    left: -10%;
+  }
+
+  100% {
+    left: 120%;
+  }
 }
