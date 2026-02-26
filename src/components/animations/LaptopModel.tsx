@@ -26,21 +26,27 @@ function ProceduralLaptop(props: any) {
             {/* Lidar/Glow dot on back */}
             <pointLight position={[0, 1.5, -1.2]} intensity={2} color="#0066ff" distance={5} />
 
+            {/* Screen glow onto the keyboard */}
+            <pointLight position={[0, 1.2, 0.8]} intensity={3} color="#0088ff" distance={5} />
+
+            {/* Neon underglow */}
+            <pointLight position={[0, -0.5, 0]} intensity={2} color="#8a2be2" distance={8} />
+
             {/* Base of the laptop */}
             <RoundedBox args={[3.2, 0.12, 2.2]} radius={0.05} smoothness={4} position={[0, 0, 0]}>
                 <meshStandardMaterial color="#1a1a24" roughness={0.4} metalness={0.8} />
             </RoundedBox>
 
-            {/* Keyboard Area (darker indented rectangle) */}
+            {/* Keyboard Area (simulating glowing keys base) */}
             <mesh position={[0, 0.061, -0.2]}>
                 <boxGeometry args={[2.8, 0.01, 1.1]} />
-                <meshStandardMaterial color="#0b0b12" roughness={0.8} />
+                <meshStandardMaterial color="#0b0b12" roughness={0.6} metalness={0.4} emissive="#002244" emissiveIntensity={0.2} />
             </mesh>
 
             {/* Trackpad */}
             <mesh position={[0, 0.061, 0.65]}>
                 <boxGeometry args={[1.2, 0.01, 0.6]} />
-                <meshStandardMaterial color="#11111a" roughness={0.6} metalness={0.2} />
+                <meshStandardMaterial color="#11111a" roughness={0.5} metalness={0.3} />
             </mesh>
 
             {/* Screen Group (hinged at the back edge) */}
@@ -70,21 +76,39 @@ function ProceduralLaptop(props: any) {
                         overflow: "hidden",
                     }}
                 >
-                    <div className="w-full h-full flex flex-col items-center justify-center relative p-8 cursor-default select-none">
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)]" />
-                        <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--neon-blue)] to-transparent opacity-50" />
+                    <div className="w-full h-full flex flex-col items-start justify-start relative p-8 cursor-default select-none bg-[#050508] font-mono text-sm md:text-base opacity-30">
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.05)_0%,transparent_100%)] pointer-events-none" />
+                        <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--neon-blue)] to-transparent opacity-20" />
 
-                        <h1 className="text-6xl font-black text-white tracking-widest mb-4 z-10" style={{ textShadow: "0 0 20px rgba(59,130,246,0.8)" }}>
-                            SAFIR
-                        </h1>
-                        <p className="text-[var(--neon-blue)] font-mono text-xl z-10">AI SYSTEM ONLINE</p>
+                        <div className="z-10 text-left text-gray-500 mt-2 ml-2 tracking-wide leading-relaxed">
+                            <div className="text-gray-600 mb-4">{`// Initializing core AI systems`}</div>
+                            <div className="mb-2">
+                                <span className="text-[#ff7b72]">import</span> {`{ Network }`} <span className="text-[#ff7b72]">from</span> <span className="text-[#a5d6ff]">'@lib/neural'</span>;
+                            </div>
+                            <div className="mb-6">
+                                <span className="text-[#ff7b72]">import</span> {`{ analyze }`} <span className="text-[#ff7b72]">from</span> <span className="text-[#a5d6ff]">'@core/vision'</span>;
+                            </div>
 
-                        {/* Terminal decorative lines */}
-                        <div className="absolute bottom-4 left-4 text-[#444] font-mono text-sm">
-                            <p>&gt; load modules...</p>
-                            <p>&gt; init computer_vision.ts</p>
-                            <p>&gt; status: active</p>
+                            <div className="mb-2">
+                                <span className="text-[#ff7b72]">export const</span> <span className="text-[#79c0ff]">BootSequence</span> = <span className="text-[#ff7b72]">async</span> () <span className="text-[#ff7b72]">=&gt;</span> {`{`}
+                            </div>
+                            <div className="ml-4 mb-2">
+                                <span className="text-[#ff7b72]">const</span> model = <span className="text-[#ff7b72]">await</span> Network.<span className="text-[#d2a8ff]">load</span>(<span className="text-[#a5d6ff]">'safir-v2'</span>);
+                            </div>
+                            <div className="ml-4 mb-2">
+                                model.<span className="text-[#d2a8ff]">optimize</span>({`{ mode: `}<span className="text-[#a5d6ff]">'production'</span>{` }`});
+                            </div>
+                            <div className="ml-4 mb-2">
+                                <span className="text-[#8b949e]">/* Ready for inference */</span>
+                            </div>
+                            <div className="ml-4 mb-2">
+                                <span className="text-[#ff7b72]">return</span> model.<span className="text-[#d2a8ff]">serve</span>();
+                            </div>
+                            <div>{`};`}</div>
                         </div>
+
+                        {/* Blinking cursor */}
+                        <div className="z-10 absolute bottom-10 left-10 w-2.5 h-5 bg-[var(--neon-blue)] animate-pulse opacity-50" />
                     </div>
                 </Html>
             </group>
@@ -94,7 +118,8 @@ function ProceduralLaptop(props: any) {
 
 function Rig() {
     return useFrame((state) => {
-        state.camera.position.lerp(new THREE.Vector3(state.mouse.x * 0.5, 1.5 + state.mouse.y * 0.5, 5.5), 0.05);
+        // Zoom out significantly to make the laptop a small background element
+        state.camera.position.lerp(new THREE.Vector3(state.mouse.x * 2.0, 3.0 + state.mouse.y * 1.5, 14.0), 0.05);
         state.camera.lookAt(0, 0, 0);
     });
 }
@@ -115,8 +140,8 @@ export default function LaptopModel() {
                         azimuth={[-1, 1]}
                         snap={true}
                     >
-                        {/* Wrapper group to push everything down slightly so the camera looks at the laptop center */}
-                        <group position-y={-0.8} scale={1.2}>
+                        {/* Wrapper group. Scaled down to be small and centered behind text */}
+                        <group position-y={-0.5} scale={0.8}>
                             <ProceduralLaptop />
                         </group>
                     </PresentationControls>

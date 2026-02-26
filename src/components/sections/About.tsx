@@ -91,15 +91,16 @@ export default function About() {
                             {timeline.map((item, index) => (
                                 <motion.div
                                     key={index}
-                                    initial={{ opacity: 0, x: -40, y: 20 }}
-                                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                                    initial={{ opacity: 0, x: -60, y: 30, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
                                     transition={{
-                                        duration: 0.6,
+                                        duration: 0.7,
                                         delay: 0.15 + index * 0.2,
-                                        ease: "easeOut" as const
+                                        type: "spring",
+                                        bounce: 0.4
                                     }}
                                     viewport={{ once: true, margin: "-50px" }}
-                                    whileHover={{ x: 6, boxShadow: "var(--card-shadow-hover)" }}
+                                    whileHover={{ scale: 1.05, x: 12, rotate: index % 2 === 0 ? 1 : -1, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" }}
                                     className="relative pl-10 group"
                                 >
                                     {/* Timeline Dot — Appears with pop */}
@@ -151,16 +152,16 @@ export default function About() {
                             {stats.map((stat, index) => (
                                 <motion.div
                                     key={index}
-                                    initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                                    initial={{ opacity: 0, y: 50, scale: 0.8 }}
                                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                                     transition={{
-                                        duration: 0.5,
+                                        duration: 0.6,
                                         delay: 0.3 + index * 0.12,
                                         type: "spring",
-                                        bounce: 0.3
+                                        bounce: 0.5
                                     }}
                                     viewport={{ once: true, margin: "-30px" }}
-                                    whileHover={{ y: -6, boxShadow: "var(--card-shadow-hover)" }}
+                                    whileHover={{ scale: 1.08, y: -10, rotateZ: index % 2 === 0 ? 2 : -2, boxShadow: "0 15px 35px rgba(59,130,246,0.2)" }}
                                     className="premium-card p-5 flex flex-col items-center justify-center text-center"
                                 >
                                     <motion.div
@@ -168,7 +169,7 @@ export default function About() {
                                         whileInView={{ scale: 1, rotate: 0 }}
                                         transition={{ duration: 0.4, delay: 0.5 + index * 0.12, type: "spring", bounce: 0.4 }}
                                         viewport={{ once: true }}
-                                        className={`mb-3 p-2.5 rounded-xl ${stat.bg} ${stat.color}`}
+                                        className={`mb-3 p-2.5 rounded-xl ${stat.bg} ${stat.color} group-hover:scale-125 group-hover:rotate-12 transition-all duration-300`}
                                     >
                                         {stat.icon}
                                     </motion.div>

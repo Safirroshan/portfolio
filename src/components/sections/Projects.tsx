@@ -143,10 +143,10 @@ export default function Projects() {
                             key={project.id}
                             onClick={() => setSelectedId(project.id)}
                             initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ duration: 0.6, delay: index * 0.1, type: "spring", bounce: 0.4 }}
                             viewport={{ once: true, margin: "-50px" }}
-                            whileHover={{ y: -10, boxShadow: "0 20px 60px rgba(0,0,0,0.1)" }}
+                            whileHover={{ scale: 1.03, y: -12, rotateX: 2, rotateY: 2, boxShadow: "0 25px 60px rgba(139,92,246,0.25)" }}
                             className="cursor-pointer premium-card overflow-hidden group"
                         >
                             {/* Project Image or Gradient Fallback */}
@@ -185,9 +185,13 @@ export default function Projects() {
 
                                 {/* Coming Soon Badge */}
                                 {project.status === "coming-soon" && (
-                                    <div className="absolute top-3 right-3 z-30 px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm shadow-sm border border-white/10">
+                                    <motion.div
+                                        animate={{ scale: [1, 1.05, 1], boxShadow: ["0 0 10px rgba(139,92,246,0)", "0 0 20px rgba(139,92,246,0.5)", "0 0 10px rgba(139,92,246,0)"] }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                        className="absolute top-3 right-3 z-30 px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm border border-[var(--neon-purple)]/50"
+                                    >
                                         <span className="text-[var(--neon-purple)] font-bold text-xs">Coming Soon</span>
-                                    </div>
+                                    </motion.div>
                                 )}
                             </div>
 

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Camera, AlertCircle, Video, Play, StopCircle } from "lucide-react";
 import GlassCard from "../ui/GlassCard";
 import { API_ENDPOINTS } from "@/lib/config";
+import PhoneModel from "../animations/PhoneModel";
 
 export default function YOLODemo() {
     const [isStreaming, setIsStreaming] = useState(false);

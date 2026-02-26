@@ -84,13 +84,13 @@ export default function TechStack() {
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                                transition={{ duration: 0.5, delay: index * 0.05, type: "spring", bounce: 0.3 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                                transition={{ duration: 0.6, delay: index * 0.05, type: "spring", bounce: 0.5 }}
                                 viewport={{ once: true, margin: "-30px" }}
-                                whileHover={{ y: -6, boxShadow: "var(--card-shadow-hover)" }}
+                                whileHover={{ scale: 1.05, rotate: index % 2 === 0 ? 2 : -2, boxShadow: "0 0 30px rgba(59,130,246,0.3)" }}
                                 className="premium-card p-5 group cursor-default"
                             >
-                                <div className={`mb-3 w-10 h-10 rounded-xl ${tech.bg} ${tech.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                                <div className={`mb-3 w-10 h-10 rounded-xl ${tech.bg} ${tech.color} flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 shadow-lg`}>
                                     {tech.icon}
                                 </div>
 

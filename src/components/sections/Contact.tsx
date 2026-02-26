@@ -73,19 +73,19 @@ export default function Contact() {
                                     href={info.href}
                                     target={info.label !== "Phone" && info.label !== "Email" ? "_blank" : undefined}
                                     rel="noopener noreferrer"
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: index * 0.1 }}
+                                    initial={{ opacity: 0, scale: 0.8, x: -30 }}
+                                    whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                                    transition={{ duration: 0.5, delay: index * 0.1, type: "spring", bounce: 0.4 }}
                                     viewport={{ once: true }}
-                                    whileHover={{ x: 6, boxShadow: "var(--card-shadow-hover)" }}
+                                    whileHover={{ scale: 1.05, rotateZ: index % 2 === 0 ? 2 : -2, x: 10, boxShadow: "0 10px 30px rgba(59,130,246,0.3)" }}
                                     className="premium-card flex items-center gap-4 p-4 group"
                                 >
-                                    <div className={`p-2.5 rounded-xl ${info.bg} ${info.color} transition-colors`}>
+                                    <div className={`p-2.5 rounded-xl ${info.bg} ${info.color} group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 shadow-md`}>
                                         {info.icon}
                                     </div>
-                                    <div>
-                                        <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">{info.label}</p>
-                                        <p className="text-white font-medium text-sm group-hover:text-[var(--neon-blue)] transition-colors">{info.value}</p>
+                                    <div className="flex flex-col justify-center">
+                                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{info.label}</p>
+                                        <p className="text-white font-medium text-sm group-hover:text-[var(--neon-blue)] transition-colors mt-0.5">{info.value}</p>
                                     </div>
                                 </motion.a>
                             ))}
@@ -140,9 +140,9 @@ export default function Contact() {
                                 <motion.button
                                     type="submit"
                                     disabled={isSubmitting || isSent}
-                                    whileHover={{ scale: 1.01 }}
-                                    whileTap={{ scale: 0.99 }}
-                                    className="w-full py-3 rounded-xl bg-[var(--neon-blue)] text-white font-bold text-sm hover:bg-[var(--neon-blue)]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-md"
+                                    whileHover={{ scale: 1.03, boxShadow: "0 0 25px rgba(59,130,246,0.5)" }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="w-full py-3 rounded-xl bg-[var(--neon-blue)] text-white font-bold text-sm hover:bg-[var(--neon-blue)]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-lg"
                                 >
                                     {isSubmitting ? (
                                         <motion.span
