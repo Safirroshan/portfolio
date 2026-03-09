@@ -12,15 +12,40 @@ export default function Contact() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSent, setIsSent] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        setTimeout(() => {
+
+        try {
+            // We use Web3Forms for easy email processing without needing a backend server
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    access_key: "b40eb6d7-4c68-480e-a616-db32f6de2bf7",
+                    name: formState.name,
+                    email: formState.email,
+                    message: formState.message,
+                }),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                setFormState({ name: "", email: "", message: "" });
+                setIsSent(true);
+                setTimeout(() => setIsSent(false), 3000);
+            } else {
+                alert("Failed to send message: " + result.message);
+            }
+        } catch (error) {
+            console.error(error);
+            alert("An error occurred while sending the message.");
+        } finally {
             setIsSubmitting(false);
-            setIsSent(true);
-            setFormState({ name: "", email: "", message: "" });
-            setTimeout(() => setIsSent(false), 3000);
-        }, 1500);
+        }
     };
 
     const contactInfo = [
